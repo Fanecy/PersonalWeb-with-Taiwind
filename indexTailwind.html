@@ -999,7 +999,43 @@
     offset: 100,        // 触发动画的偏移量
     easing: 'ease-out-cubic'
   });
+
+  
+  // 手机端只显示项目经验板块
+document.addEventListener("DOMContentLoaded", function() {
+  const allSections = document.querySelectorAll("section");
+  const footer = document.querySelector("footer");
+
+  function toggleSectionsForMobile() {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      // 遍历所有 section，如果不是 #experience 或 #projects 就隐藏
+      allSections.forEach(sec => {
+        if (sec.id !== "experience" && sec.id !== "projects") {
+          sec.style.display = "none";
+        } else {
+          sec.style.display = "";
+        }
+      });
+
+      if (footer) footer.style.display = "none";
+    } else {
+      // 恢复显示所有板块
+      allSections.forEach(sec => sec.style.display = "");
+      if (footer) footer.style.display = "";
+    }
+  }
+
+  // 初始判断
+  toggleSectionsForMobile();
+
+  // 屏幕尺寸变化时也重新判断
+  window.addEventListener("resize", toggleSectionsForMobile);
+});
+
 </script>
   
 </body>
+
 </html>
