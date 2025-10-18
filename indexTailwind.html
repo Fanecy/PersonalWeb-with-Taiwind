@@ -977,12 +977,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({
-    duration: 800,      // 动画持续时间
-    once: true,         // 只执行一次
-     offset: isMobile ? 0 : 100,        // 触发动画的偏移量
-    easing: 'ease-out-cubic'
-  });
+
 
   
   // 手机端只显示项目经验板块
@@ -993,28 +988,36 @@ document.addEventListener("DOMContentLoaded", function() {
   function toggleSectionsForMobile() {
     const isMobile = window.innerWidth <= 768;
 
+     AOS.init({
+        duration: 300,
+        once: true,
+        offset: isMobile ? 0 : 100,  // 手机端 offset=0，PC保持现状
+        easing: 'ease-out-cubic'
+    });
+
     if (isMobile) {
+      // 遍历所有 section，如果不是 #experience 或 #projects 就隐藏
       allSections.forEach(sec => {
-        if (sec.id === "experience" || sec.id === "projects") {
-          sec.style.display = "block"; // 强制显示为块级
-          sec.style.opacity = "1";     // 如果被AOS隐藏，强制显示
-          sec.style.visibility = "visible";
-        } else {
+        if (sec.id !== "experience" && sec.id !== "projects") {
           sec.style.display = "none";
+        } else {
+          sec.style.display = "";
         }
       });
+
       if (footer) footer.style.display = "none";
-      // 刷新 AOS，让手机端重新渲染动画元素
-      if (window.AOS) {
-        AOS.refreshHard();
-      }
     } else {
+      // 恢复显示所有板块
       allSections.forEach(sec => sec.style.display = "");
       if (footer) footer.style.display = "";
     }
   }
 
+  // 初始判断
   toggleSectionsForMobile();
+  AOS.refreshHard();
+
+  // 屏幕尺寸变化时也重新判断
   window.addEventListener("resize", toggleSectionsForMobile);
 });
 
@@ -1024,6 +1027,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
