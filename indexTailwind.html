@@ -980,7 +980,7 @@
   AOS.init({
     duration: 800,      // 动画持续时间
     once: true,         // 只执行一次
-    offset: 100,        // 触发动画的偏移量
+     offset: isMobile ? 0 : 100,        // 触发动画的偏移量
     easing: 'ease-out-cubic'
   });
 
@@ -1024,5 +1024,6 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
