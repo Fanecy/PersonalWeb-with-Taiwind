@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>原田桦的作品集</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入 Alpine.js 用于简单状态管理 -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Tailwind 自定义主题配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1', // 主色
+            primaryDark: '#4f46e5',
+            primaryLight: '#a5b4fc',
+            secondary: '#f59e0b',
+            accent: '#ec4899',
+            textDark: '#1f2937',
+            textLight: '#6b7280',
+            textMuted: '#9ca3af',
+            bgLight: '#f8fafc',
+            bgWhite: '#ffffff',
+          },
+          boxShadow: {
+            sm: "0 1px 2px 0 rgba(0,0,0,0.05)",
+            md: "0 4px 6px -1px rgba(0,0,0,0.1)",
+            lg: "0 10px 15px -3px rgba(0,0,0,0.1)",
+            xl: "0 20px 25px -5px rgba(0,0,0,0.1)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome 图标 -->
+  <link href="lib/fontawesome-free-6.7.2-web/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- AOS 动画库 -->
+  <link href="lib/aos-master/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-[Poppins] bg-bgLight text-textDark leading-relaxed scroll-smooth">
+  
+<!-- 导航栏 -->
+<nav x-data="{ open: false }" 
+     class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-textDark/95 border-b border-white/10 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="#" class="text-2xl font-bold flex items-center">
+          <i class="fas fa-laptop-code mr-2 text-primary"></i>
+          <span class="bg-gradient-to-tr from-primary to-accent bg-clip-text text-transparent">数媒作品集</span>
+        </a>
+      </div>
+
+      <!-- 桌面菜单 -->
+      <div class="hidden lg:flex space-x-6 items-center">
+        <a href="#about" 
+           class="relative font-medium text-white hover:text-primary transition-colors duration-200 group"
+           title="了解我的背景">
+          <i class="fas fa-user mr-1"></i>关于
+          <span class="absolute left-1/2 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+        </a>
+        <a href="#experience" 
+           class="relative font-medium text-white hover:text-primary transition-colors duration-200 group"
+           title="查看项目经验">
+          <i class="fas fa-briefcase mr-1"></i>经验
+          <span class="absolute left-1/2 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+        </a>
+        <a href="#projects" 
+           class="relative font-medium text-white hover:text-primary transition-colors duration-200 group"
+           title="浏览精选作品">
+          <i class="fas fa-folder-open mr-1"></i>作品
+          <span class="absolute left-1/2 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+        </a>
+        <a href="#contact" 
+           class="relative font-medium text-white hover:text-primary transition-colors duration-200 group"
+           title="与我联系">
+          <i class="fas fa-envelope mr-1"></i>联系
+          <span class="absolute left-1/2 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+        </a>
+      </div>
+
+      <!-- 移动端汉堡菜单按钮 -->
+      <div class="flex lg:hidden items-center">
+        <button @click="open = true" 
+                class="text-white hover:text-primary focus:outline-none transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas 移动端菜单 -->
+  <div x-show="open" 
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       class="fixed inset-0 z-50 bg-black/50"
+       @click="open = false"
+       style="display: none;">
+    
+    <div class="fixed top-0 right-0 w-64 h-full bg-white shadow-xl"
+         x-show="open"
+         @click.stop
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="translate-x-full"
+         style="display: none;">
+      
+      <!-- 菜单头部 -->
+      <div class="flex justify-between items-center border-b border-gray-200 px-5 py-4">
+        <h5 class="text-lg font-semibold text-textDark">导航菜单</h5>
+        <button @click="open = false" 
+                class="text-gray-500 hover:text-primary transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- 菜单项 -->
+      <nav class="mt-4 space-y-2 px-4">
+        <a href="#about" 
+           @click="open=false" 
+           class="flex items-center space-x-3 py-3 px-3 text-gray-700 hover:text-primary hover:bg-primaryLight/10 rounded-lg transition-all">
+          <i class="fas fa-user w-5"></i>
+          <span class="font-medium">关于我</span>
+        </a>
+        <a href="#experience" 
+           @click="open=false" 
+           class="flex items-center space-x-3 py-3 px-3 text-gray-700 hover:text-primary hover:bg-primaryLight/10 rounded-lg transition-all">
+          <i class="fas fa-briefcase w-5"></i>
+          <span class="font-medium">项目经验</span>
+        </a>
+        <a href="#projects" 
+           @click="open=false" 
+           class="flex items-center space-x-3 py-3 px-3 text-gray-700 hover:text-primary hover:bg-primaryLight/10 rounded-lg transition-all">
+          <i class="fas fa-folder-open w-5"></i>
+          <span class="font-medium">作品展示</span>
+        </a>
+        <a href="#contact" 
+           @click="open=false" 
+           class="flex items-center space-x-3 py-3 px-3 text-gray-700 hover:text-primary hover:bg-primaryLight/10 rounded-lg transition-all">
+          <i class="fas fa-envelope w-5"></i>
+          <span class="font-medium">联系方式</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero 区域 -->
+<section class="relative bg-gradient-to-tr from-primary to-accent text-white overflow-hidden pt-24 pb-28 text-center">
+  
+  <!-- 粒子背景层（SVG pattern 模拟） -->
+  <div class="absolute inset-0 opacity-30">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+      <defs>
+        <pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse">
+          <circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grain)" />
+    </svg>
+  </div>
+
+  <!-- 内容 -->
+  <div class="relative z-10 max-w-3xl mx-auto px-4">
+    <h1 class="text-4xl md:text-5xl font-extrabold drop-shadow-md mb-6">
+      你好，我是原田桦
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 opacity-95">
+      全栈开发者 | UI设计师 | 数字创作者
+    </p>
+    <a href="#projects" 
+       class="inline-block px-8 py-3 text-lg font-semibold uppercase tracking-wide border-2 border-white rounded-full hover:bg-white hover:text-primary transition duration-300 shadow-xl">
+      查看我的作品
+    </a>
+  </div>
+</section>
+
+<!-- 最新动态提醒 -->
+<section class="bg-bgLight py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center gap-3 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded shadow-sm" 
+         x-data="{ visible: true }" 
+         x-show="visible"
+         x-transition>
+      <i class="fas fa-info-circle text-blue-500 text-2xl"></i>
+      <div class="flex-1">
+        <strong>最新动态：</strong>目前正在寻找实习机会，欢迎HR和技术团队联系！
+        <a href="#contact" class="text-blue-600 font-semibold underline hover:text-blue-800">立即联系 →</a>
+      </div>
+      <!-- 关闭按钮 -->
+      <button @click="visible=false" class="text-blue-400 hover:text-blue-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 关于我 -->
+<section id="about" class="bg-bgWhite py-24">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 relative">
+      关于我
+      <span class="block w-16 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-4 rounded"></span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10 items-start">
+      <!-- 左侧头像和联系方式 -->
+      <div class="text-center">
+        <img src="pics/me.jpg" alt="原田桦" 
+             class="w-56 h-56 rounded-full object-cover border-4 border-primaryLight shadow-lg mx-auto hover:scale-105 hover:rotate-6 transition"/>
+        <h4 class="font-bold text-xl mt-4">原田桦</h4>
+        <p class="text-textMuted mb-6">全栈开发者 | UI 设计师</p>
+        <ul class="text-left space-y-3">
+          <li class="flex items-center"><i class="fas fa-map-marker-alt text-primary mr-3"></i>浙江 杭州</li>
+          <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i>15934349473@163.com</li>
+          <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i>a2985171395@gmail.com</li>
+          <li class="flex items-center"><i class="fas fa-phone-alt text-primary mr-3"></i>+86 15934349473</li>
+          <li class="flex items-center"><i class="fab fa-github text-primary mr-3"></i>github.com/Fanecy</li>
+        </ul>
+      </div>
+      
+      <!-- 右侧详细信息 -->
+      <div class="md:col-span-2 space-y-8">
+        <!-- 自我简介 -->
+        <div>
+          <h5 class="font-bold text-primary mb-3 text-lg">自我简介</h5>
+          <p class="text-lg leading-relaxed text-textDark">我专注于构建优雅、互动性强的前端界面，善于将技术与美感结合。拥有网页开发、UI/UX 设计与数据可视化经验，致力于打造令人惊艳的数字体验。</p>
+        </div>
+
+        <!-- 教育与经历 -->
+        <div>
+          <h5 class="font-bold text-primary mb-3 text-lg">教育与经历</h5>
+          <div class="space-y-4">
+            <div class="flex justify-between items-start p-4 bg-bgLight rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div>
+                <h6 class="font-semibold text-textDark">浙江理工大学 · 数字媒体技术</h6>
+                <p class="text-sm text-textMuted mt-1">本科在读，专注于数字媒体技术与交互设计</p>
+              </div>
+              <span class="px-3 py-1 bg-primary text-white rounded-full text-sm font-medium whitespace-nowrap ml-4">2023 - 2027</span>
+            </div>
+            <div class="flex justify-between items-start p-4 bg-bgLight rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div>
+                <h6 class="font-semibold text-textDark">某科技公司 · 前端实习生</h6>
+                <p class="text-sm text-textMuted mt-1">参与企业级项目开发，积累实战经验</p>
+              </div>
+              <span class="px-3 py-1 bg-secondary text-white rounded-full text-sm font-medium whitespace-nowrap ml-4">2025.7 - 2025.9</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 证书 -->
+        <div>
+          <h5 class="font-bold text-primary mb-3 text-lg">证书</h5>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+              <i class="fas fa-certificate text-yellow-500 mr-3 text-lg"></i>
+              <span class="font-medium">大学英语四级（CET-4）</span>
+            </div>
+            <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+              <i class="fas fa-certificate text-yellow-500 mr-3 text-lg"></i>
+              <span class="font-medium">大学英语六级（CET-6）口语证书</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 技能水平 - Tabs 分类 -->
+        <div x-data="{ tab: 'frontend' }">
+          <h5 class="font-bold text-primary mb-4 text-lg">技能水平</h5>
+          
+          <!-- Tab 导航 -->
+          <div class="flex space-x-1 border-b border-gray-200 mb-6">
+            <button :class="{'border-b-2 border-primary text-primary bg-primary/5': tab==='frontend', 'text-textMuted hover:text-textDark': tab!=='frontend'}" 
+                    @click="tab='frontend'" 
+                    class="px-4 py-2 font-medium transition-all duration-200 rounded-t-lg">
+              <i class="fas fa-code mr-2"></i>前端开发
+            </button>
+            <button :class="{'border-b-2 border-primary text-primary bg-primary/5': tab==='design', 'text-textMuted hover:text-textDark': tab!=='design'}" 
+                    @click="tab='design'" 
+                    class="px-4 py-2 font-medium transition-all duration-200 rounded-t-lg">
+              <i class="fas fa-paint-brush mr-2"></i>设计工具
+            </button>
+            <button :class="{'border-b-2 border-primary text-primary bg-primary/5': tab==='backend', 'text-textMuted hover:text-textDark': tab!=='backend'}" 
+                    @click="tab='backend'" 
+                    class="px-4 py-2 font-medium transition-all duration-200 rounded-t-lg">
+              <i class="fas fa-server mr-2"></i>后端技术
+            </button>
+          </div>
+          
+          <!-- 前端开发技能 -->
+          <div x-show="tab==='frontend'" 
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 transform translate-y-2"
+               x-transition:enter-end="opacity-100 transform translate-y-0"
+               class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">HTML5</span>
+                <span class="text-textMuted font-medium">90%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:90%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">CSS3</span>
+                <span class="text-textMuted font-medium">85%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:85%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">JavaScript</span>
+                <span class="text-textMuted font-medium">80%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:80%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">React</span>
+                <span class="text-textMuted font-medium">75%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:75%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 设计工具技能 -->
+          <div x-show="tab==='design'" 
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 transform translate-y-2"
+               x-transition:enter-end="opacity-100 transform translate-y-0"
+               class="space-y-4"
+               style="display: none;">
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">Figma</span>
+                <span class="text-textMuted font-medium">85%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:85%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">Adobe Photoshop</span>
+                <span class="text-textMuted font-medium">70%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:70%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">Sketch</span>
+                <span class="text-textMuted font-medium">60%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:60%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 后端技术技能 -->
+          <div x-show="tab==='backend'" 
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 transform translate-y-2"
+               x-transition:enter-end="opacity-100 transform translate-y-0"
+               class="space-y-4"
+               style="display: none;">
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">C++ QT</span>
+                <span class="text-textMuted font-medium">95%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:95%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">Node.js</span>
+                <span class="text-textMuted font-medium">70%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:70%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-textDark">Python</span>
+                <span class="text-textMuted font-medium">65%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-1000" style="width:65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 技术栈 -->
+        <div>
+          <h5 class="font-bold text-primary mb-3 text-lg">技术栈</h5>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">HTML5</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">CSS3</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">JavaScript</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">React</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">Vue.js</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">Node.js</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">Figma</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">C++ QT</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">Bootstrap</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">ECharts</span>
+          </div>
+        </div>
+
+        <!-- 兴趣爱好 -->
+        <div>
+          <h5 class="font-bold text-primary mb-3 text-lg">兴趣爱好</h5>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">📸 摄影</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">🎮 游戏设计</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">🎵 音乐</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">🎨 数字艺术</span>
+            <span class="px-4 py-2 rounded-full border-2 border-primaryLight bg-bgWhite hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white cursor-pointer shadow-sm transition-all duration-200">🏃‍♂️ 运动健身</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 项目经验 -->
+<section id="experience" class="bg-bgLight py-20" x-data="{ 
+  index: 0, 
+  projects: [
+    {
+      title: '炫彩产品官网',
+      badge: 'Web 开发',
+      badgeColor: 'bg-primary',
+      icon: 'fas fa-palette',
+      date: '2024.01 - 2024.03',
+      description: '现代化的产品官网，采用炫彩渐变设计和响应式布局。网站具有出色的视觉效果和用户体验，完美适配各种设备。',
+      features: [
+        'HTML5 + CSS3 + Bootstrap 5 构建',
+        '响应式设计，支持移动端和桌面端',
+        '渐变色彩搭配，视觉冲击力强',
+        'CSS3 动画效果，交互体验流畅'
+      ],
+      tags: ['HTML5', 'CSS3', 'Bootstrap', 'JavaScript'],
+      image: 'pics/web3.jpg'
+    },
+    {
+      title: '移动应用设计',
+      badge: 'UI/UX 设计',
+      badgeColor: 'bg-green-500',
+      icon: 'fas fa-mobile-alt',
+      date: '2023.09 - 2023.12',
+      description: '完整的移动应用UI设计方案，包含用户界面设计、交互原型和用户体验优化。设计风格简约现代，符合当前移动端设计趋势。',
+      features: [
+        '使用Figma进行原型设计和界面设计',
+        '遵循Material Design和iOS设计规范',
+        '完整的用户流程设计',
+        '多平台适配方案'
+      ],
+      tags: ['Figma', 'Sketch', 'Photoshop', 'Principle'],
+      image: 'pics/app.png'
+    },
+    {
+      title: '数据可视化大屏',
+      badge: '数据可视化',
+      badgeColor: 'bg-secondary',
+      icon: 'fas fa-chart-line',
+      date: '2024.03 - 2024.06',
+      description: '企业级数据可视化大屏项目，实现了实时数据展示、多维度数据分析和交互式图表功能。适用于监控中心、会议室等大屏展示场景。',
+      features: [
+        'ECharts + Vue.js 构建交互式图表',
+        'WebSocket 实现实时数据更新',
+        '支持多种图表类型（柱状图、饼图、地图等）',
+        '响应式布局，适配不同屏幕尺寸'
+      ],
+      tags: ['Vue.js', 'ECharts', 'WebSocket', 'Axios'],
+      image: 'pics/data.png'
+    },
+    {
+      title: 'VLC QT高仿QQ播放器',
+      badge: '桌面应用',
+      badgeColor: 'bg-blue-400',
+      icon: 'fas fa-play-circle',
+      date: '2024.06 - 2024.08',
+      description: '基于VLC库和Qt框架开发的多媒体播放器，高度还原QQ影音的界面设计和交互体验，支持多种视频格式播放和实用功能。',
+      features: [
+        '基于VLC库实现多格式视频播放',
+        'Qt界面设计，高仿QQ影音UI',
+        '播放列表管理与快捷键控制',
+        '音量调节、进度控制、截图功能'
+      ],
+      tags: ['C++', 'Qt', 'VLC', 'QML'],
+      image: 'pics/qt.png'
+    },
+    {
+      title: 'Qt+OpenCV视觉处理系统',
+      badge: '计算机视觉',
+      badgeColor: 'bg-yellow-500',
+      icon: 'fas fa-camera',
+      date: '2024.09 - 2024.10',
+      description: '结合Qt图形界面和OpenCV计算机视觉库开发的图像处理应用，实现了实时摄像头捕捉、图像滤镜、人脸识别等功能。',
+      features: [
+        '实时摄像头视频流捕捉与处理',
+        '图像滤镜、边缘检测、灰度转换',
+        '人脸检测与特征识别',
+        'Qt界面设计，操作简洁直观'
+      ],
+      tags: ['C++', 'Qt', 'OpenCV', 'CMake'],
+      image: 'pics/OpenCV.png'
+    }
+  ]
+}">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 relative" data-aos="fade-up">
+      项目经验
+      <span class="block w-16 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-4 rounded"></span>
+    </h2>
+    
+    <!-- 项目卡片容器 -->
+    <div class="relative" data-aos="fade-up" data-aos-delay="200">
+      
+      <!-- 单个项目展示 -->
+      <template x-for="(project, i) in projects" :key="i">
+        <div x-show="index === i" 
+             x-transition:enter="transition ease-out duration-500"
+             x-transition:enter-start="opacity-0 transform translate-x-10"
+             x-transition:enter-end="opacity-100 transform translate-x-0"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform translate-x-0"
+             x-transition:leave-end="opacity-0 transform -translate-x-10"
+             class="grid md:grid-cols-2 gap-8 items-center"
+             style="display: none;">
+          
+          <!-- 左侧项目信息卡片 -->
+          <div class="bg-bgWhite p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <!-- 图标 -->
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-primary to-accent text-white rounded-2xl mb-4 shadow-lg">
+              <i :class="project.icon" class="text-2xl"></i>
+            </div>
+
+            <!-- 标题和徽章 -->
+            <div class="flex justify-between items-start mb-3">
+              <h5 class="font-bold text-2xl text-textDark" x-text="project.title"></h5>
+              <span class="px-3 py-1 rounded-full text-white text-sm font-medium whitespace-nowrap ml-2" 
+                    :class="project.badgeColor" 
+                    x-text="project.badge"></span>
+            </div>
+
+            <!-- 日期 -->
+            <p class="text-textMuted mb-4 flex items-center">
+              <i class="fas fa-calendar-alt mr-2"></i>
+              <span x-text="project.date"></span>
+            </p>
+
+            <!-- 项目描述 -->
+            <p class="text-textDark leading-relaxed mb-4" x-text="project.description"></p>
+
+            <!-- 技术特点/核心功能 -->
+            <h6 class="font-bold text-textDark mb-3">
+              <span x-text="i === 1 ? '设计特点：' : (i === 2 ? '技术特点：' : (i >= 3 ? '核心功能：' : '技术特点：'))"></span>
+            </h6>
+            <ul class="space-y-2 mb-4">
+              <template x-for="feature in project.features" :key="feature">
+                <li class="flex items-start text-textDark">
+                  <i class="fas fa-check-circle text-green-500 mr-3 mt-1 flex-shrink-0"></i>
+                  <span x-text="feature"></span>
+                </li>
+              </template>
+            </ul>
+
+            <!-- 技术标签 -->
+            <div class="flex flex-wrap gap-2">
+              <template x-for="tag in project.tags" :key="tag">
+                <span class="px-4 py-2 bg-gray-100 text-textDark rounded-lg font-medium hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white transition-all duration-200 cursor-default" x-text="tag"></span>
+              </template>
+            </div>
+          </div>
+          
+          <!-- 右侧项目图片 -->
+          <div class="relative group">
+            <div class="absolute -inset-4 bg-gradient-to-r from-primary to-accent rounded-2xl blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+            <img :src="project.image" 
+                 :alt="project.title" 
+                 class="relative rounded-2xl shadow-2xl w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"/>
+          </div>
+        </div>
+      </template>
+      
+      <!-- 左右切换按钮 -->
+      <div class="absolute top-1/2 -left-4 md:-left-8 transform -translate-y-1/2 z-10">
+        <button @click="index = index > 0 ? index - 1 : projects.length - 1" 
+                class="p-4 rounded-full bg-white text-primary shadow-2xl hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/30">
+          <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+      </div>
+      <div class="absolute top-1/2 -right-4 md:-right-8 transform -translate-y-1/2 z-10">
+        <button @click="index = (index + 1) % projects.length" 
+                class="p-4 rounded-full bg-white text-primary shadow-2xl hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/30">
+          <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+      </div>
+      
+      <!-- 指示器（5个点） -->
+      <div class="flex justify-center mt-12 space-x-3">
+        <template x-for="(project, dot) in projects" :key="dot">
+          <button @click="index = dot" 
+                  :class="{
+                    'bg-gradient-to-r from-primary to-accent w-10 h-3': index === dot, 
+                    'bg-gray-300 w-3 h-3 hover:bg-gray-400': index !== dot
+                  }" 
+                  class="rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  :title="project.title"></button>
+        </template>
+      </div>
+
+      <!-- 项目计数器 -->
+      <div class="text-center mt-6">
+        <p class="text-textMuted font-medium text-lg">
+          <span class="text-primary font-bold text-2xl" x-text="index + 1"></span>
+          <span class="mx-2 text-gray-400">/</span>
+          <span class="font-bold" x-text="projects.length"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 精选作品 -->
+<section id="projects" class="bg-bgWhite py-24" x-data="{ 
+  modal: null,
+  projects: [
+    {
+      id: 'project1',
+      title: '炫彩产品官网',
+      subtitle: 'HTML5 / CSS3 / Bootstrap 5',
+      image: 'pics/web3.jpg',
+      tags: ['响应式', '现代设计'],
+      description: '现代化的产品官网，采用炫彩渐变设计和响应式布局。网站具有出色的视觉效果和用户体验，完美适配各种设备。',
+      features: [
+        'HTML5 + CSS3 + Bootstrap 5 构建',
+        '响应式设计，支持移动端和桌面端',
+        '渐变色彩搭配，视觉冲击力强',
+        'CSS3 动画效果，交互体验流畅'
+      ],
+      techStack: ['HTML5', 'CSS3', 'Bootstrap 5', 'JavaScript'],
+      liveDemo: '#',
+      sourceCode: '#'
+    },
+    {
+      id: 'project2',
+      title: '移动应用设计',
+      subtitle: 'Figma / Sketch / UI设计',
+      image: 'pics/app.png',
+      tags: ['UI设计', '移动端'],
+      description: '完整的移动应用UI设计方案，包含用户界面设计、交互原型和用户体验优化。设计风格简约现代，符合当前移动端设计趋势。',
+      features: [
+        '使用Figma进行原型设计和界面设计',
+        '遵循Material Design和iOS设计规范',
+        '完整的用户流程设计',
+        '多平台适配方案'
+      ],
+      techStack: ['Figma', 'Sketch', 'Photoshop', 'Principle'],
+      liveDemo: '#',
+      sourceCode: '#'
+    },
+    {
+      id: 'project3',
+      title: '数据可视化大屏',
+      subtitle: 'Vue.js / ECharts / 数据可视化',
+      image: 'pics/data.png',
+      tags: ['数据可视化', '大屏展示'],
+      description: '企业级数据可视化大屏项目，实现了实时数据展示、多维度数据分析和交互式图表功能。适用于监控中心、会议室等大屏展示场景。',
+      features: [
+        'ECharts + Vue.js 构建交互式图表',
+        'WebSocket 实现实时数据更新',
+        '支持多种图表类型（柱状图、饼图、地图等）',
+        '响应式布局，适配不同屏幕尺寸'
+      ],
+      techStack: ['Vue.js', 'ECharts', 'WebSocket', 'Axios'],
+      liveDemo: '#',
+      sourceCode: '#'
+    },
+    {
+      id: 'project4',
+      title: 'VLC QT高仿QQ播放器',
+      subtitle: 'C++ / Qt / VLC / 桌面应用',
+      image: 'pics/qt.png',
+      tags: ['桌面应用', '多媒体'],
+      description: '基于VLC库和Qt框架开发的多媒体播放器，高度还原QQ影音的界面设计和交互体验，支持多种视频格式播放和实用功能。',
+      features: [
+        '基于VLC库实现多格式视频播放',
+        'Qt界面设计，高仿QQ影音UI',
+        '播放列表管理与快捷键控制',
+        '音量调节、进度控制、截图功能'
+      ],
+      techStack: ['C++', 'Qt', 'VLC', 'QML'],
+      liveDemo: '#',
+      sourceCode: '#'
+    },
+    {
+      id: 'project5',
+      title: 'Qt+OpenCV视觉处理系统',
+      subtitle: 'C++ / Qt / OpenCV / 计算机视觉',
+      image: 'pics/OpenCV.png',
+      tags: ['计算机视觉', '图像处理'],
+      description: '结合Qt图形界面和OpenCV计算机视觉库开发的图像处理应用，实现了实时摄像头捕捉、图像滤镜、人脸识别等功能。',
+      features: [
+        '实时摄像头视频流捕捉与处理',
+        '图像滤镜、边缘检测、灰度转换',
+        '人脸检测与特征识别',
+        'Qt界面设计，操作简洁直观'
+      ],
+      techStack: ['C++', 'Qt', 'OpenCV', 'CMake'],
+      liveDemo: '#',
+      sourceCode: '#'
+    },
+    {
+      id: 'project6',
+      title: '响应式企业官网',
+      subtitle: 'React / Node.js / 全栈开发',
+      image: 'pics/web1.jpg',
+      tags: ['全栈开发', '企业级'],
+      description: '现代化企业官网，集成内容管理系统、产品展示、新闻发布等功能。采用前后端分离架构，具备良好的SEO优化和用户体验。',
+      features: [
+        'React + Hooks 构建现代化前端',
+        'Node.js + Express 后端API',
+        'MongoDB 数据存储',
+        'JWT 用户认证系统'
+      ],
+      techStack: ['React', 'Node.js', 'Express', 'MongoDB'],
+      liveDemo: '#',
+      sourceCode: '#'
+    }
+  ]
+}">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 relative" data-aos="fade-up">
+      精选作品
+      <span class="block w-16 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-4 rounded"></span>
+    </h2>
+    
+    <!-- 作品网格 -->
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="200">
+      <!-- 作品卡片循环 -->
+      <template x-for="project in projects" :key="project.id">
+        <div class="relative group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <!-- 项目图片 -->
+          <div class="relative overflow-hidden h-60">
+            <img :src="project.image" 
+                 :alt="project.title" 
+                 class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+            
+            <!-- 悬停遮罩层 -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+              <div class="text-center space-y-4">
+                <button @click="modal = project.id" 
+                        class="px-6 py-3 bg-white/20 backdrop-blur-sm border-2 border-white text-white font-medium rounded-full hover:bg-white hover:text-textDark transition-all duration-300 transform hover:scale-105">
+                  <i class="fas fa-eye mr-2"></i>查看详情
+                </button>
+                <div class="flex space-x-4 justify-center">
+                </div>
+              </div>
+            </div>
+            
+            <!-- 项目类型标签 -->
+            <div class="absolute top-4 left-4">
+              <template x-for="tag in project.tags.slice(0, 2)" :key="tag">
+                <span class="inline-block px-3 py-1 bg-gradient-to-r from-primary to-accent text-white text-xs font-medium rounded-full mr-2 mb-2 shadow-lg" x-text="tag"></span>
+              </template>
+            </div>
+          </div>
+          
+          <!-- 项目信息 -->
+          <div class="p-6">
+            <h6 class="font-bold text-xl text-textDark mb-2 group-hover:text-primary transition-colors duration-300" x-text="project.title"></h6>
+            <p class="text-textMuted text-sm mb-4" x-text="project.subtitle"></p>
+            
+            <!-- 技术标签 -->
+            <div class="flex flex-wrap gap-2">
+              <template x-for="tech in project.techStack.slice(0, 4)" :key="tech">
+                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white transition-all duration-200 cursor-default" x-text="tech"></span>
+              </template>
+              <span x-show="project.techStack.length > 4" class="px-3 py-1 bg-gray-100 text-gray-500 text-xs rounded-lg" x-text="`+${project.techStack.length - 4}`"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- 模态框 -->
+    <template x-for="project in projects" :key="project.id">
+      <div x-show="modal === project.id" 
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100"
+           x-transition:leave-end="opacity-0"
+           class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+           @click="modal = null"
+           style="display: none;">
+        
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+             @click.stop
+             x-transition:enter="transition ease-out duration-300 transform"
+             x-transition:enter-start="scale-95 translate-y-4"
+             x-transition:enter-end="scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200 transform"
+             x-transition:leave-start="scale-100 translate-y-0"
+             x-transition:leave-end="scale-95 translate-y-4">
+          
+          <!-- 模态框头部 -->
+          <div class="relative">
+            <img :src="project.image" 
+                 :alt="project.title" 
+                 class="w-full h-64 object-cover rounded-t-2xl"/>
+            <button @click="modal = null" 
+                    class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm text-white rounded-full hover:bg-white hover:text-textDark transition-all duration-200">
+              <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- 渐变遮罩 -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-t-2xl"></div>
+            
+            <!-- 标题覆盖层 -->
+            <div class="absolute bottom-6 left-6 text-white">
+              <h3 class="text-3xl font-bold mb-2" x-text="project.title"></h3>
+              <p class="text-lg opacity-90" x-text="project.subtitle"></p>
+            </div>
+          </div>
+          
+          <!-- 模态框内容 -->
+          <div class="p-8">
+            <!-- 项目描述 -->
+            <div class="mb-6">
+              <h4 class="text-xl font-bold text-textDark mb-3">项目简介</h4>
+              <p class="text-textDark leading-relaxed" x-text="project.description"></p>
+            </div>
+            
+            <!-- 主要功能 -->
+            <div class="mb-6">
+              <h4 class="text-xl font-bold text-textDark mb-3">主要功能</h4>
+              <ul class="space-y-2">
+                <template x-for="feature in project.features" :key="feature">
+                  <li class="flex items-start text-textDark">
+                    <i class="fas fa-check-circle text-green-500 mr-3 mt-1 flex-shrink-0"></i>
+                    <span x-text="feature"></span>
+                  </li>
+                </template>
+              </ul>
+            </div>
+            
+            <!-- 技术栈 -->
+            <div class="mb-8">
+              <h4 class="text-xl font-bold text-textDark mb-3">技术栈</h4>
+              <div class="flex flex-wrap gap-2">
+                <template x-for="tech in project.techStack" :key="tech">
+                  <span class="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 text-primary border border-primary/20 rounded-full font-medium" x-text="tech"></span>
+                </template>
+              </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex flex-wrap gap-4 justify-center">
+              <a :href="project.liveDemo" 
+                 class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
+                <i class="fas fa-external-link-alt"></i>
+                <span>在线预览</span>
+              </a>
+              <a :href="project.sourceCode" 
+                 class="flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-200">
+                <i class="fab fa-github"></i>
+                <span>查看源码</span>
+              </a>
+              <button @click="modal = null" 
+                      class="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 text-gray-600 rounded-full font-medium hover:border-gray-400 hover:text-gray-800 transition-all duration-200">
+                <i class="fas fa-times"></i>
+                <span>关闭</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+</section>
+
+<!-- 联系我 -->
+<section id="contact" class="bg-gradient-to-tr from-bgLight to-primaryLight/10 py-24">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 relative">
+      联系我
+      <span class="block w-16 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-4 rounded"></span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-10">
+      <!-- 表单 -->
+      <form @submit.prevent="alert('感谢您的留言！我会尽快回复您。')" class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+        <input type="text" placeholder="您的姓名（必填）" required class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-primary focus:ring focus:ring-primary/30"/>
+        <input type="email" placeholder="电子邮箱（必填）" required class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-primary focus:ring focus:ring-primary/30"/>
+        <select required class="w-full border-2 border-gray-200 rounded-lg p-3">
+          <option>请选择咨询类型</option>
+          <option>💼 实习/工作机会</option>
+          <option>🤝 项目合作</option>
+          <option>💡 技术咨询</option>
+          <option>📚 学习交流</option>
+          <option>🎯 其他事项</option>
+        </select>
+        <textarea rows="5" placeholder="请输入您想说的话..." required class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-primary focus:ring focus:ring-primary/30"></textarea>
+        <label class="flex items-center">
+          <input type="checkbox" required class="mr-2">
+          我已阅读并同意 <a href="#" class="text-primary underline">隐私政策</a>
+        </label>
+        <div class="flex gap-2">
+          <button type="submit" class="flex-1 bg-gradient-to-r from-primary to-accent text-white px-5 py-3 rounded-full font-bold hover:scale-105 transition"><i class="fas fa-paper-plane mr-2"></i>发送</button>
+          <button type="reset" class="px-5 py-3 rounded-full border border-gray-400 hover:bg-gray-100" title="重置表单"><i class="fas fa-redo"></i></button>
+        </div>
+      </form>
+
+      <!-- 微信二维码 -->
+      <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+        <i class="fab fa-weixin text-green-500 text-3xl mb-3"></i>
+        <img src="pics/MyCode.png" alt="微信二维码" class="w-44 h-44 mx-auto rounded-lg shadow-md">
+        <h6 class="font-bold mt-3"><i class="fas fa-qrcode text-primary mr-2"></i>扫一扫加我微信</h6>
+        <p class="text-sm text-textMuted mb-4">随时欢迎交流合作</p>
+        <!-- 在线状态条 -->
+        <div>
+          <div class="flex justify-between mb-1">
+            <small class="text-textMuted">在线时间</small>
+            <span class="px-2 py-0.5 bg-green-500 text-white text-xs rounded-full"><i class="fas fa-circle text-xs"></i> 在线</span>
+          </div>
+          <div class="w-full bg-gray-200 h-1 rounded-full">
+            <div class="bg-green-500 h-1 rounded-full animate-pulse" style="width:85%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="bg-gradient-to-tr from-textDark to-gray-900 text-textMuted py-10 text-center">
+  <p class="mb-2">&copy; 2025 浙江理工大学原田桦 | 设计与编码</p>
+  <p class="text-sm mb-4">用心创造每一个数字体验</p>
+  <div class="flex justify-center gap-3">
+    <a href="https://github.com/Fanecy" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white transition">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="mailto:15934349473@163.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white transition">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-primary hover:to-accent hover:text-white transition">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,      // 动画持续时间
+    once: true,         // 只执行一次
+    offset: 100,        // 触发动画的偏移量
+    easing: 'ease-out-cubic'
+  });
+</script>
+  
+</body>
+</html>

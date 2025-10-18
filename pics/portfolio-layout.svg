@@ -1,0 +1,42 @@
+<svg width="1440" height="5000" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .section { fill: #E5E7EB; stroke: #9CA3AF; stroke-width: 1; }
+    .label { font-family: Arial, sans-serif; font-size: 20px; fill: #374151; }
+    .note { font-family: Arial, sans-serif; font-size: 14px; fill: #4B5563; }
+  </style>
+
+  <!-- 导航栏 -->
+  <rect x="0" y="0" width="1440" height="80" class="section"/>
+  <text x="20" y="50" class="label">Navbar - 1440×80px</text>
+
+  <!-- Banner -->
+  <rect x="0" y="80" width="1440" height="720" class="section"/>
+  <text x="20" y="450" class="label">Banner - 1440×720px（ pic：1920×1080）</text>
+
+  <!-- Hero -->
+  <rect x="0" y="800" width="1440" height="500" class="section"/>
+  <text x="20" y="1050" class="label">Hero - 1440×500px</text>
+
+  <!-- 关于我 -->
+  <rect x="0" y="1300" width="1440" height="900" class="section"/>
+  <text x="20" y="1750" class="label"> About - 1440×900px</text>
+
+  <!-- 项目经验 -->
+  <rect x="0" y="2200" width="1440" height="500" class="section"/>
+  <text x="20" y="2470" class="label"> Experience - 1440×500px</text>
+
+  <!-- 精选作品 -->
+  <rect x="0" y="2700" width="1440" height="900" class="section"/>
+  <text x="20" y="3150" class="label"> Projects - 1440×900px</text>
+
+  <!-- 联系我 -->
+  <rect x="0" y="3600" width="1440" height="600" class="section"/>
+  <text x="20" y="3900" class="label"> Contact - 1440×600px</text>
+
+  <!-- 页脚 -->
+  <rect x="0" y="4200" width="1440" height="160" class="section"/>
+  <text x="20" y="4290" class="label"> Footer - 1440×160px</text>
+
+  <!-- 总高度标注 -->
+  <text x="20" y="4960" class="note">TotalHeight 5000px</text>
+</svg>
