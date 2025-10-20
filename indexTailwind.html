@@ -571,7 +571,7 @@
              style="display: none;">
           
           <!-- 左侧项目信息卡片 -->
-          <div class="bg-bgWhite p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <div class="bg-bgWhite p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 min-h-[640px]">
             <!-- 图标 -->
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-primary to-accent text-white rounded-2xl mb-4 shadow-lg">
               <i :class="project.icon" class="text-2xl"></i>
@@ -616,24 +616,23 @@
           </div>
           
           <!-- 右侧项目图片 -->
-          <div class="relative group">
-            <div class="absolute -inset-4 bg-gradient-to-r from-primary to-accent rounded-2xl blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-            <img :src="project.image" 
-                 :alt="project.title" 
-                 class="relative rounded-2xl shadow-2xl w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"/>
+          <div class="relative group aspect-[4/3] rounded-2xl overflow-hidden">
+          <div class="absolute -inset-4 bg-gradient-to-r from-primary to-accent rounded-2xl blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+           <img :src="project.image" 
+           :alt="project.title" 
+           class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"/>
           </div>
-        </div>
       </template>
       
       <!-- 左右切换按钮 -->
       <div class="absolute top-1/2 -left-4 md:-left-8 transform -translate-y-1/2 z-10">
-        <button @click="index = index > 0 ? index - 1 : projects.length - 1" 
+        <button @click.prevent="index = index > 0 ? index - 1 : projects.length - 1" 
                 class="p-4 rounded-full bg-white text-primary shadow-2xl hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/30">
           <i class="fas fa-chevron-left text-xl"></i>
         </button>
       </div>
       <div class="absolute top-1/2 -right-4 md:-right-8 transform -translate-y-1/2 z-10">
-        <button @click="index = (index + 1) % projects.length" 
+        <button @click.prevent="index = (index + 1) % projects.length" 
                 class="p-4 rounded-full bg-white text-primary shadow-2xl hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/30">
           <i class="fas fa-chevron-right text-xl"></i>
         </button>
